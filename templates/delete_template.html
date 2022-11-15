@@ -1,0 +1,25 @@
+{% extends 'main.html'%}
+
+{% block content %}
+
+
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            
+            <br>
+
+            <form class="form" form action="" method="POST">
+                {% csrf_token %}
+                <p>Are you sure you want to delete "{{object}}" ?</p>
+                <a href="{{request.GET.next}}">Go Back</a>
+             <!-- this is for dynamically creating url. We need to provide next value at the place from where we are calling this url/page  -->
+
+             
+                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Confirm" />
+            </form>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

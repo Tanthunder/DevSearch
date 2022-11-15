@@ -1,0 +1,54 @@
+from dataclasses import field
+from django.forms import ModelForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from . models import Profile , Skill, Message
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta :
+        model = User
+        fields = ['first_name','email','username','password1','password2']
+        # labels used to change the field name/label....On front end first name will be displayed as Name.
+        labels = {
+            'first_name' : 'Name',
+        }
+        #widgets can be used for modifying fields attributes like css classes
+    def __init__(self, *args,**kwargs):
+        super(CustomUserCreationForm,self).__init__(*args,**kwargs)
+        
+        #To access each field and update its css class to 'input'
+        for key,value in self.fields.items() :
+            value.widget.attrs.update({'class':'input'})
+
+class ProfileForm(ModelForm):
+    class Meta :
+        model = Profile
+        fields = ['name','email','username','location','short_into','bio','profile_image','social_github','social_linkedin','social_insta','social_website']
+    def __init__(self, *args,**kwargs):
+        super(ProfileForm,self).__init__(*args,**kwargs)
+
+        for key,value in self.fields.items() :
+            value.widget.attrs.update({'class':'input'})
+
+class SkillForm(ModelForm):
+    class Meta:
+        model = Skill
+        fields = '__all__'
+        exclude = ['owner']
+
+    def __init__(self, *args,**kwargs):
+        super(SkillForm,self).__init__(*args,**kwargs)
+
+        for key,value in self.fields.items() :
+            value.widget.attrs.update({'class':'input'})
+
+class MessageForm(ModelForm):
+    class Meta:
+        model = Message
+        fields = ['name','email','subject','body']
+
+    def __init__(self, *args,**kwargs):
+        super(ModelForm,self).__init__(*args,**kwargs)
+
+        for key,value in self.fields.items() :
+            value.widget.attrs.update({'class':'input'})
